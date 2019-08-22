@@ -1,0 +1,39 @@
+
+  /*
+  Copyright Google LLC. All Rights Reserved.
+  Use of this source code is governed by an MIT-style license that
+  can be found in the LICENSE file at http://angular.io/license
+  */
+  @import 'theme';
+
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+
+.app-sidenav-container {
+  // Override default value to scroll only app-side-content
+  .mat-drawer-inner-container {
+      overflow: hidden;
+  }
+}
+
+mat-form-field {
+  width: 20em;
+}
+
+.app-checkbox-field {
+  margin: 1em 0;
+}
+
+.vars-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+// I've not managed to get it working in service-bar.component.scss
+.app-service-bar .app-checkbox-field .mat-checkbox-checked .mat-checkbox-label {
+  color: black !important;
+  font-weight: bold;
+}

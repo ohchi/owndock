@@ -1,0 +1,146 @@
+@import '../theme';
+
+.service-selected {
+    font-weight: bold;
+}
+
+.app-navbar {
+    position: relative;
+    z-index: 2;
+}
+
+.app-sidenav-container {
+}
+
+
+.app-sidenav {
+    min-width: 15em;
+    // padding: 10px;
+}
+
+.app-section-header {
+    padding: 15px 10px;
+    position: relative;
+    text-transform: uppercase;
+    height: 20px;
+    .actions {
+        position: absolute;
+        right: 5px;
+        top: 9px;
+        mat-icon {
+            font-size: 24px;
+        }
+        .mat-icon-button {
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            color: mat-color(map-get($app-theme, foreground), icon);
+        }
+        .primary-action {
+            color: mat-color(map-get($app-theme, primary), 500);
+        }
+        .mat-icon-button[disabled] {
+            color: rgba(0, 0, 0, 0.26);
+        }
+    }
+    .search {
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        background-color: inherit;
+        input {
+            width: 0;
+            font-size: 1em;
+            padding: 0;
+            height: 20px;
+            border: none !important;
+            border-color: transparent !important;
+            border-style: none;
+            background-color: inherit;
+            outline: none;
+        }
+        input:focus, input.dirty {
+            width: 30em;
+        }
+    }
+}
+
+.app-section {
+    overflow: hidden;
+    .app-section-header {
+        background-color: mat-color(map-get($app-theme, background), app-bar);
+    }
+    .content {
+        padding: 10px;
+        overflow: auto;
+    }
+}
+
+$main-section-offset: 2em;
+
+.app-section.main {
+    .app-section-header {
+        padding-left: $main-section-offset;
+    }
+    .content {
+        padding-left: $main-section-offset;
+        padding-top: $main-section-offset;
+        height: calc(100vh - 150px);
+    }
+}
+
+.app-side-content {
+    height: calc(100vh - 250px);
+    .list-item {
+        padding-bottom: 10px;
+        padding-left: 1em;
+        position: relative;
+        .text {
+            cursor: pointer;
+        }
+        .actions {
+            display: none;
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+            mat-icon {
+                font-size: 18px;
+            }
+            .mat-icon-button {
+                height: 24px;
+                width: 24px;
+                line-height: 24px;
+                color: mat-color(map-get($app-theme, foreground), icon);
+            }
+            .primary-action {
+                color: mat-color(map-get($app-theme, primary), 500);
+            }
+            .mat-icon-button[disabled] {
+                color: rgba(0, 0, 0, 0.26);
+            }
+        }
+    }
+    .list-item:hover .actions {
+        display: inherit;
+    }
+}
+
+// ::ng-deep .mat-icon-button {
+//     height:16px !important;
+//     width:16px !important;
+//     font-size: 16px !important;
+// }
+
+::ng-deep .mat-icon-button.small {
+
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+
+    .mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+    }
+}

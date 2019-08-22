@@ -1,0 +1,13 @@
+<div class="vars-row">
+  <div *ngFor="let col of envVarsByCols" class="vars-col">
+    <div *ngFor="let arg of col">
+      <mat-form-field *ngIf="arg.type == 'text'">
+        <mat-label>{{ arg.name }}</mat-label>
+        <input matInput [(ngModel)]="env[arg.name]">
+      </mat-form-field>
+      <div class="app-checkbox-field">
+        <mat-checkbox *ngIf="arg.type == 'checkbox'" [(ngModel)]="env[arg.name]">{{ arg.name }}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>

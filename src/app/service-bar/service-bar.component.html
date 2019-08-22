@@ -1,0 +1,24 @@
+<!-- <ul>
+  <li *ngFor="let s of servicesAvailable">
+    <input type="checkbox" [(ngModel)]="s.enable" [attr.disabled]="s.lock || null" (change)="enabledChange($event, s)">{{ s.name }}
+  </li>
+</ul> -->
+
+<div class="vars-row app-service-bar">
+  <div *ngFor="let col of servicesAvailableByCols" class="vars-col">
+    <div *ngFor="let s of col">
+      <div class="app-checkbox-field">
+        
+        <mat-checkbox 
+          [(ngModel)]="s.enable" 
+          [disabled]="s.lock" 
+          (change)="enabledChange($event, s)"
+        >
+          {{ s.name }}
+        </mat-checkbox>
+
+      </div>
+    </div>
+  </div>
+</div>
+  

@@ -1,0 +1,72 @@
+<mat-toolbar color="primary" class="mat-elevation-z6 app-navbar">
+  <span>Owndock</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav mode="side" opened class="app-sidenav">
+    <div class="app-section-header">
+      project
+      <span class="actions">
+        <button 
+          mat-icon-button
+          class="primary-action"
+          title="Download project archive"
+          (click)="submitHandler()"
+          [disabled]="isAppPristine || null"
+        ><mat-icon>get_app</mat-icon></button>
+      </span>
+    </div>
+    <div class="app-section-header">
+      dotenv
+      <span class="actions">
+        <button (click)="allEnvEditingButtonHandler()" mat-icon-button title="Edit .env file"><mat-icon>edit</mat-icon></button>
+      </span>
+    </div>
+    <div class="app-section">
+      <div class="app-section-header">
+        services
+        <span class="actions">
+          <button mat-icon-button (click)="servicesEditingButtonHandler()" title="Add or remove services"><mat-icon>edit</mat-icon></button>
+        </span>
+      </div>
+      <div class="content app-side-content">
+        <div *ngFor="let key of servicesEnabled" [class.service-selected]="selectedServiceKey == key" class="list-item">
+          <span (click)="serviceClickHandler(key)" class="text">{{ key }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="app-section main">
+      <div class="app-section-header">
+        {{ getSectionTitle(currentSectionId) }}
+        <span *ngIf="currentSectionId == 'serviceEnvEditing' || currentSectionId == 'allEnvEditing'" class="search">
+
+          <button mat-button mat-icon-button (click)="searchField.focus()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <input type="search" [ngModel]="search" (ngModelChange)="onSearchChange($event)"  [class.dirty]="search" #searchField>
+            
+        </span>
+      </div>
+      <div class="content">
+
+          <div [hidden]="currentSectionId != 'servicesEditing'">
+            <app-service-bar
+              [env]="env"
+              [compose]="compose"
+              (enabledChange)="enabledChangeHandler($event)"
+            ></app-service-bar>
+        </div>
+        
+        <div [hidden]="currentSectionId != 'serviceEnvEditing' && currentSectionId != 'allEnvEditing'">
+          <app-env-editor 
+            [(env)]="env"
+            [names]="getEnvVarNames(selectedServiceKey, env, search)"
+          ></app-env-editor>
+        </div>
+
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

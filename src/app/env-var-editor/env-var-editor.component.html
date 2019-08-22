@@ -1,0 +1,6 @@
+<div>
+  <label [for]="envVar.name">{{ envVar.name }}:</label>
+  <input *ngIf="envVar.type == 'text'" type="text" [ngModel]="envVar.value" (ngModelChange)="envVarChangeHandler($event)"  id="{{envVar.name}}">
+  <input *ngIf="envVar.type == 'checkbox'" type="checkbox" [(ngModel)]="envVar.value" id="{{envVar.name}}">
+</div>
+  
