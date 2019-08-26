@@ -13,7 +13,7 @@ export class EnvEditorComponent implements OnChanges {
   @Input() env;
   @Output() envChange = new EventEmitter();
   private envVars: Array<EnvVarModel> = [];
-  private envVarsByCols: Array<Array<EnvVarModel>> = [];
+  envVarsByCols: Array<Array<EnvVarModel>> = [];
   private envOld = null;
   private namesOld = null;
   private ddd: EnvVarModel = { name: 'aaa', value: 'bbb', type: 'ccc' };

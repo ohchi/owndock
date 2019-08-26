@@ -14,7 +14,7 @@ export class ServiceEditorComponent implements OnChanges {
   @Input() env;
   @Output() envChange = new EventEmitter();
   private serviceEnvVars: Array<EnvVarModel> = [];
-  private serviceEnvVarsByCols: Array<Array<EnvVarModel>> = [];
+  serviceEnvVarsByCols: Array<Array<EnvVarModel>> = [];
   private formHash: string;
 
   pristine: boolean = true;

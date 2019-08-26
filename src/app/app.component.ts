@@ -5,6 +5,7 @@ import { Observable, of, throwError, Subject } from 'rxjs';
 import { memoize } from './memoizee';
 import Utils from './utils';
 import { saveAs } from 'file-saver';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,8 @@ export class AppComponent {
   searchChanged: Subject<string> = new Subject<string>();
 
   private dataHash: string;
-  private isAppPristine: boolean = this.getDataHash() == this.dataHash;
-  private currentSectionId = 'servicesEditing';
+  isAppPristine: boolean = this.getDataHash() == this.dataHash;
+  currentSectionId = 'servicesEditing';
 
   constructor(private http: HttpClient) {
 
@@ -40,7 +41,7 @@ export class AppComponent {
   ngOnInit() {
 
     this.http
-        .get<any>('http://localhost:8001/api/laradock')
+        .get<any>(`${environment.apiUrl}/api/laradock`)
         .pipe(
           tap(_ => console.log(`fetched compose info`)),
           catchError(this.handleError)
@@ -73,7 +74,7 @@ export class AppComponent {
     return throwError(errorMessage);
   }
 
-  private enabledChangeHandler(arr: Array<string>) {
+  enabledChangeHandler(arr: Array<string>) {
 
     this.servicesEnabled = arr;
 
@@ -102,13 +103,13 @@ export class AppComponent {
     return env;
   }
 
-  private submitHandler() {
+  submitHandler() {
 
     let ownCompose = this.getOwnCompose(this.servicesEnabled);
     let ownEnv = this.getOwnEnv(ownCompose);
 
     this.http
-        .post('http://localhost:8001/api/download', {
+        .post(`${environment.apiUrl}/api/download`, {
           env: ownEnv,
           compose: ownCompose,
           arch_type: 'zip'
@@ -161,7 +162,7 @@ export class AppComponent {
     return ownCompose;
   }
 
-  private getSectionTitle(id: string): string {
+  getSectionTitle(id: string): string {
 
     if (id == 'servicesEditing') return 'services';
     if (id == 'serviceEnvEditing') return this.selectedServiceKey + ' environment';
@@ -177,13 +178,13 @@ export class AppComponent {
     this.envVarNames = Utils.collectEnvVarNames(this.compose.services[this.selectedServiceKey]);
   }
 
-  private servicesEditingButtonHandler() {
+  servicesEditingButtonHandler() {
 
     this.selectedServiceKey = null;
     this.currentSectionId = 'servicesEditing';
   }
 
-  private allEnvEditingButtonHandler() {
+  allEnvEditingButtonHandler() {
 
     this.selectedServiceKey = null;
     this.currentSectionId = 'allEnvEditing';
@@ -191,7 +192,7 @@ export class AppComponent {
   }
 
   @memoize()
-  private getEnvVarNames(selectedServiceKey, env, search): Array<string> {
+  getEnvVarNames(selectedServiceKey, env, search): Array<string> {
 
     let names = null;
 
