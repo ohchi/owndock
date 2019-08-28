@@ -58,9 +58,8 @@
               (enabledChange)="enabledChangeHandler($event)"
             ></app-service-bar>
         </div>
-        
-        <div [hidden]="currentSectionId != 'serviceEnvEditing' && currentSectionId != 'allEnvEditing'">
-          <app-env-editor 
+        <div *ngIf="currentSectionId == 'serviceEnvEditing' || currentSectionId == 'allEnvEditing'">
+            <app-env-editor 
             [(env)]="env"
             [names]="getEnvVarNames(selectedServiceKey, env, search)"
           ></app-env-editor>
