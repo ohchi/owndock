@@ -1,6 +1,6 @@
 # Owndock
 
-Owndock is a web application that allows to construct your own local development environment based on the famous [laradock](https://laradock.io) project.
+[Owndock](https://ohchi.github.io/owndock/) is a web application that allows to construct your own local development environment based on the famous [laradock](https://laradock.io) project.
 
 ## Why should I use it?
 
