@@ -77,17 +77,24 @@ export class ServiceBarComponent {
 
     for (let name of names) {
 
-      let dependsOn = this.compose.services[name].depends_on || [];
+      const service = this.compose.services[name];
+      let newDeps = service.depends_on || [];
 
-      dependsOn = dependsOn.map(d => {
+      if (service.links) {
+      
+        newDeps = newDeps.concat(this.getDepsFromLinks(service.links));
+      }
 
-        let envVarName = this.getEnvVarName(d);
-        let serviceName = envVarName ? this.env[envVarName] : d;
+      // dependsOn = dependsOn.map(d => {
+
+      //   let envVarName = this.getEnvVarName(d);
+      //   let serviceName = envVarName ? this.env[envVarName] : d;
   
-        return serviceName;
-      });
+      //   return serviceName;
+      // });
 
-      deps = deps.concat(dependsOn);
+      newDeps = this.resolveDeps(newDeps);
+      deps = deps.concat(newDeps);
     }
 
     deps = deps.filter((e, i, self) => self.indexOf(e) === i);  // unique
@@ -107,5 +114,33 @@ export class ServiceBarComponent {
     if (arr) return arr[1];
     
     return null;
+  }
+
+  private resolveDeps(names: Array<string>): Array<string> {
+
+    return names.map(d => {
+
+      let envVarName = this.getEnvVarName(d);
+      let serviceName = envVarName ? this.env[envVarName] : d;
+
+      return serviceName;
+    });
+  }
+
+  private getDepsFromLinks(links: Array<string>): Array<string> {
+
+    // From this:
+    // web:
+    // links:
+    // - db
+    // - db:database
+    // - redis
+    // Must get this: [ 'db', 'db', 'redis' ]
+
+    return links
+            .map(link => {
+
+              return link.split(':')[0];
+            });
   }
  }
